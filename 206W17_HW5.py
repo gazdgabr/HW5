@@ -84,15 +84,13 @@ def getTwitterData():
 
 	list_of_tweets = results["statuses"]
 
-	print(list_of_tweets[0].keys())
-	
-	print("\nTEXT: " + list_of_tweets[0]["text"], encoding="utf-8")
+	print("\nTEXT: " +  str(list_of_tweets[0]["text"].encode('utf-8')))
 	print("CREATED AT: " + list_of_tweets[0]["created_at"] +"\n")
 
-	print("TEXT: " + list_of_tweets[1]["text"], encoding="utf-8")
+	print("TEXT: " + str(list_of_tweets[1]["text"].encode('utf-8')))
 	print("CREATED AT: " + list_of_tweets[1]["created_at"] + "\n")
 
-	print("TEXT: " + list_of_tweets[2]["text"], encoding="utf-8")
+	print("TEXT: " + str(list_of_tweets[2]["text"].encode('utf-8')))
 	print("CREATED AT: " + list_of_tweets[2]["created_at"])
 
 getTwitterData()
