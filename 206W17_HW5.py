@@ -47,7 +47,9 @@ auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth, parser=tweepy.parsers.JSONParser()) # Set up library to grab stuff from twitter with your authentication, and return it in a JSON-formatted way
 
 ## Write the rest of your code here!
-file_name = "twitter_cache.json"
+
+#Get user input
+file_name = "twitterCache.json"
 
 try:
 	cache_file = open(file_name,'r')
@@ -64,8 +66,33 @@ except:
 
 
 
+def getTwitterData():
+	keyPhrase = input("Enter the phrase you want to search twitter for: ")
+	# see if that keyPhrase is in the cache diction!
+	if keyPhrase in cache_dictionary: # if it is...
+		print('using cached data for', keyPhrase)
+		results = cache_dictionary[keyPhrase] # grab the data from the cache!
+	else:
+		print('getting data from internet for', keyPhrase)
+		results = api.search(q=keyPhrase) # get it from the internet
+		# but also, save in the dictionary to cache it!
+		cache_dictionary[keyPhrase] = results # add it to the dictionary -- new key-val pair
+		# and then write the whole cache dictionary, now with new info added, to the file, so it'll be there even after your program closes!
+		f = open(file_name,'w') # open the cache file for writing
+		f.write(json.dumps(cache_dictionary)) # make the whole dictionary holding data and unique identifiers into a json-formatted string, and write that wholllle string to a file so you'll have it next time!
+		f.close()
 
+	list_of_tweets = results["statuses"]
 
+	print(list_of_tweets[0].keys())
+	
+	print("\nTEXT: " + list_of_tweets[0]["text"], encoding="utf-8")
+	print("CREATED AT: " + list_of_tweets[0]["created_at"] +"\n")
 
+	print("TEXT: " + list_of_tweets[1]["text"], encoding="utf-8")
+	print("CREATED AT: " + list_of_tweets[1]["created_at"] + "\n")
 
+	print("TEXT: " + list_of_tweets[2]["text"], encoding="utf-8")
+	print("CREATED AT: " + list_of_tweets[2]["created_at"])
 
+getTwitterData()
